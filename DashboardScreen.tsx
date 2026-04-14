@@ -1,8 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { styled } from 'nativewind';
 
-export default function DashboardScreen({ route, navigation }) {
+interface DashboardScreenProps {
+  route: any;
+  navigation: any;
+}
+
+export default function DashboardScreen({ route, navigation }: DashboardScreenProps) {
   const { symbol = 'SQURPHRMA' } = route.params || {};
 
   return (
