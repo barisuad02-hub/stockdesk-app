@@ -6,7 +6,13 @@ import LoginScreen from './LoginScreen';
 import HomeScreen from './HomeScreen';
 import DashboardScreen from './DashboardScreen';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  Login: undefined;
+  Home: undefined;
+  Dashboard: { symbol?: string } | undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function Navigation() {
   const { user } = useAuth();
