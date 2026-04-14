@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, KeyboardAvoidingView, Platform, ScrollView, Alert } from 'react-native';
 import { useAuth } from './AuthContext';
-import { styled } from 'nativewind';
 
-export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [loading, setLoading] = useState(false);
+interface LoginScreenProps {
+  navigation: any;
+}
+
+export default function LoginScreen({ navigation }: LoginScreenProps) {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [isSignUp, setIsSignUp] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const { login, signup } = useAuth();
 
   const handleAuth = async () => {
@@ -22,7 +25,7 @@ export default function LoginScreen({ navigation }) {
       } else {
         await login(email, password);
       }
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert('Authentication Error', error.message);
     } finally {
       setLoading(false);
