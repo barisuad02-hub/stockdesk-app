@@ -1,42 +1,46 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './AuthContext';
 import LoginScreen from './LoginScreen';
 import HomeScreen from './HomeScreen';
 import DashboardScreen from './DashboardScreen';
 
-export type RootStackParamList = {
-  Login: undefined;
-  Home: undefined;
-  Dashboard: { symbol?: string } | undefined;
+// This component protects your routes
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <Navigate to="/" />;
+  
+  return <>{children}</>;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-function Navigation() {
-  const { user } = useAuth();
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {user ? (
-          <>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Dashboard" component={DashboardScreen} />
-          </>
-        ) : (
-          <Stack.Screen name="Login" component={LoginScreen} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-
-export default function App() {
+function App() {
   return (
     <AuthProvider>
-      <Navigation />
+      <Router>
+        <Routes>
+          <Route path="/" element={<LoginScreen />} />
+          <Route 
+            path="/home" 
+            element={
+              <ProtectedRoute>
+                <HomeScreen />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <DashboardScreen />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+      </Router>
     </AuthProvider>
   );
 }
+
+export default App;
