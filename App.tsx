@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { AuthProvider, useAuth } from './AuthContext';
 import LoginScreen from './LoginScreen';
 import HomeScreen from './HomeScreen';
@@ -38,6 +39,7 @@ function App() {
             } 
           />
         </Routes>
+        <SpeedInsights />
       </Router>
     </AuthProvider>
   );
