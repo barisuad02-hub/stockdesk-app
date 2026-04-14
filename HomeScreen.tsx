@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
 import { useAuth } from './AuthContext';
-import { styled } from 'nativewind';
 
-export default function HomeScreen({ navigation }) {
+interface HomeScreenProps {
+  navigation: any;
+}
+
+export default function HomeScreen({ navigation }: HomeScreenProps) {
   const { user, logout } = useAuth();
 
   return (
